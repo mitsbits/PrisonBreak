@@ -1,4 +1,4 @@
-﻿namespace PrionBreak.Domain
+﻿namespace PrisonBreak.Domain
 {
     public enum Direction
     {

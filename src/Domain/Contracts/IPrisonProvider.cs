@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PrionBreak.Domain
+namespace PrisonBreak.Domain
 {
     public interface IPrisonProvider
     {

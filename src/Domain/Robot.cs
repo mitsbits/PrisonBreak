@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PrionBreak.Domain
+namespace PrisonBreak.Domain
 {
     public delegate void RobotMovedEventHandler(object sender, RobotMovedEventArgs e);
 

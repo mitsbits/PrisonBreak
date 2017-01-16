@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.PlatformAbstractions;
-using PrionBreak.Domain;
+using PrisonBreak.Domain;
 
 namespace Client
 {

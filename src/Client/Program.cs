@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
-using PrionBreak.Domain;
+using PrisonBreak.Domain;
 using System;
 using System.IO;
 using System.Linq;

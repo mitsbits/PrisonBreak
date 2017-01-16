@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PrionBreak.Domain
+namespace PrisonBreak.Domain
 {
     public class DefaultRobot : Robot
     {

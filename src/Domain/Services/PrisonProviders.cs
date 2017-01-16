@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace PrionBreak.Domain
+namespace PrisonBreak.Domain
 {
     internal class FilePrisonProvider : IPrisonProvider
     {
@@ -61,18 +61,34 @@ namespace PrionBreak.Domain
             return result;
         };
 
-        public static int[,] LoadMaze(this string[] lines)
+        internal static int[,] LoadMaze(this string[] lines)
         {
             if (lines == null || lines.All(x => string.IsNullOrWhiteSpace(x.Trim()))) throw new ArgumentNullException(nameof(lines));
-            var hLength = lines.First().Length;
-            var vLength = lines.Length;
+            var allowedChars = new[] { 'X', '_', 'C', 'E' };
+            var sanitizedLines = new List<string>();
+            foreach (var line in lines)
+            {
+                var sanitized = line;
+
+                foreach (var c in line)
+                {
+                    if (!allowedChars.Contains(c)) sanitized = sanitized.Replace(c.ToString(), string.Empty);
+                }
+                sanitizedLines.Add(sanitized);
+            }
+            if (sanitizedLines == null || sanitizedLines.All(x => string.IsNullOrWhiteSpace(x.Trim()))) throw new ArgumentNullException(nameof(lines));
+
+
+
+            var hLength = sanitizedLines.First().Length;
+            var vLength = sanitizedLines.Count;
 
             var maze = new int[hLength, vLength];
             for (int x = 0; x < hLength; x++)
             {
                 for (int y = 0; y < vLength; y++)
                 {
-                    maze[x, y] = (int)_map(lines[y][x]);
+                    maze[x, y] = (int)_map(sanitizedLines[y][x]);
                 }
             }
             return maze;

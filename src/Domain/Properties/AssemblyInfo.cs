@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Domain")]
 [assembly: AssemblyTrademark("")]
+[assembly: InternalsVisibleTo("Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace PrionBreak.Domain
+namespace PrisonBreak.Domain
 {
     public class NoSolutionException : Exception
     {
