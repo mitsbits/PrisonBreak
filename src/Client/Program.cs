@@ -9,7 +9,7 @@ namespace Client
 {
     public class Program
     {
-        public static IConfigurationRoot Configuration;
+        private static IConfigurationRoot Configuration;
         private static IContainer _container;
 
         public static void Main(string[] args)
@@ -18,6 +18,8 @@ namespace Client
 
             using (var scope = _container.BeginLifetimeScope())
             {
+                Console.WriteLine("A list of prison maps follows.\nSelect a map please.");
+
                 IPrisonProvider provider = scope.Resolve<IPrisonProvider>();
                 var prisons = provider.Prisons().ToArray();
 
@@ -25,13 +27,29 @@ namespace Client
 
                 var prison = prisons[indexer];
 
-                var robot = scope.Resolve<IRobot>();
-                robot.RobotMoved += (r, e) => Console.WriteLine($"{r.GetType().Name} moved to {e.Block}\n");
+                Console.WriteLine("The robots will find the way out.\nPress any key to start.");
 
-                var result = robot.Escape(prison);
-                foreach (var prisonBlock in result)
+                Console.ReadLine();
+
+                Console.WriteLine("Robots on the move...\n");
+
+                var robot = scope.Resolve<IRobot>();
+                robot.RobotMoved += (r, e) => Console.WriteLine($"{r.GetType().Name} moved to {e.Block}");
+
+                try
                 {
-                    Console.WriteLine(prisonBlock);
+                    var result = robot.Escape(prison);
+
+                    Console.WriteLine("\nThe solution is:\n");
+
+                    foreach (var prisonBlock in result)
+                    {
+                        Console.WriteLine(prisonBlock);
+                    }
+                }
+                catch (NoSolutionException e)
+                {
+                    Console.WriteLine(e);
                 }
             }
             Console.ReadLine();
@@ -42,7 +60,7 @@ namespace Client
             for (var i = 0; i < prisons.Length; i++)
             {
                 var prison = prisons[i];
-                Console.WriteLine($"Prison: {i+1}.");
+                Console.WriteLine($"Prison: {i + 1}.\n");
                 foreach (var line in prison.StringRepresentation())
                 {
                     Console.WriteLine(line);
@@ -55,6 +73,8 @@ namespace Client
             int.TryParse(input, out selection);
             return selection - 1;
         }
+
+        #region bootstrap
 
         private static void WireUpDI(ClientSettings settings)
         {
@@ -88,5 +108,7 @@ namespace Client
             Configuration.Bind(settings);
             return settings;
         }
+
+        #endregion bootstrap
     }
 }

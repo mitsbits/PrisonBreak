@@ -35,7 +35,7 @@ namespace PrisonBreak.Domain
 
         public event RobotMovedEventHandler RobotMoved;
 
-        public PrisonBlock[] Escape(IPrison prison)
+        public virtual PrisonBlock[] Escape(IPrison prison)
         {
             Current = prison.Cell;
             while (!Escaped)
@@ -64,7 +64,7 @@ namespace PrisonBreak.Domain
         internal PrisonBlock Current
         {
             get { return _current; }
-            private set
+            set
             {
                 if (value.Flavor != BlockType.Wall)
                 {
@@ -75,9 +75,9 @@ namespace PrisonBreak.Domain
             }
         }
 
-        private bool Escaped => Current.Flavor == BlockType.Exit;
+        internal bool Escaped => Current.Flavor == BlockType.Exit;
 
-        private bool TryMove(IPrison prison, Direction direction)
+        internal bool TryMove(IPrison prison, Direction direction)
         {
             int destX;
             int destY;
@@ -98,7 +98,6 @@ namespace PrisonBreak.Domain
                 return TryGoForward(prison, direction, destX, destY);
             }
             return false;
-
         }
 
         private bool IsDeadEnd(IPrison prison)
@@ -109,7 +108,7 @@ namespace PrisonBreak.Domain
             return result;
         }
 
-        private Direction UTurn(Direction direction)
+        private static Direction UTurn(Direction direction)
         {
             Direction result;
             switch (direction)

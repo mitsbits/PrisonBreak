@@ -1,7 +1,5 @@
-﻿using System.IO;
-using System.Reflection;
-using Microsoft.Extensions.PlatformAbstractions;
-using PrisonBreak.Domain;
+﻿using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace Client
 {
@@ -9,9 +7,9 @@ namespace Client
     {
         public string PrisonsDirectory { get; set; }
 
-       public string GetPrisonsFolder()
+        public string GetPrisonsFolder()
         {
-            return (string.IsNullOrWhiteSpace(PrisonsDirectory) || !Directory.Exists(PrisonsDirectory))
+            return string.IsNullOrWhiteSpace(PrisonsDirectory) || !Directory.Exists(PrisonsDirectory)
                 ? Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "prisons")
                 : PrisonsDirectory;
         }
